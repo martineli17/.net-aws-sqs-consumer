@@ -13,28 +13,30 @@ namespace ConsumerQueue.Controllers
     {
         private readonly MessageProcessedDTO _messageProcessedDTO;
         private readonly AwsSettingsDTO _awsSettings;
+        private readonly AmazonSQSClient _sqsClient;
 
         public QueueController(MessageProcessedDTO messageProcessedDTO, AwsSettingsDTO awsSettings)
         {
             _messageProcessedDTO = messageProcessedDTO;
             _awsSettings = awsSettings;
+
+            var awsCredentials = new AmazonSQSConfig
+            {
+                ServiceURL = _awsSettings.ServerEndpoint
+            };
+            _sqsClient = new AmazonSQSClient(awsCredentials);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddMessage([FromQuery] bool toDeadLetter)
         {
-            var awsCredentials = new AmazonSQSConfig
-            {
-                ServiceURL = _awsSettings.ServerEndpoint
-            };
-            var sqsClient = new AmazonSQSClient(awsCredentials);
             var content = new MessageDTO { PublishedAt = DateTime.Now, ToDeadLetter = toDeadLetter };
             var messageRequest = new SendMessageRequest()
             {
                 MessageBody = JsonSerializer.Serialize(content),
                 QueueUrl = $"{_awsSettings.QueueEndpoint}/queue"
             };
-            await sqsClient.SendMessageAsync(messageRequest);
+            await _sqsClient.SendMessageAsync(messageRequest);
 
             return Ok();    
         }

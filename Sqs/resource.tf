@@ -23,12 +23,3 @@ resource "aws_sqs_queue" "queue_dl" {
     Environment = "localstack"
   }
 }
-
-# resource "aws_sqs_queue_redrive_allow_policy" "queue_redrive_allow_policy" {
-#   queue_url = aws_sqs_queue.queue_dl.id
-
-#   redrive_allow_policy = jsonencode({
-#     redrivePermission = "byQueue",
-#     sourceQueueArns   = [aws_sqs_queue.queue.arn]
-#   })
-# }
