@@ -3,6 +3,7 @@
 ####ConsumerQueue/ConsumerQueue/##
 ####ConsumerQueue/ConsumerQueue/## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 ####ConsumerQueue/ConsumerQueue/# User-specific files
+ConsumerQueue/.vs
 ConsumerQueue/ConsumerQueue/*.rsuser
 ConsumerQueue/ConsumerQueue/*.suo
 ConsumerQueue/ConsumerQueue/*.user
