@@ -6,7 +6,7 @@ Além disso, foi utilizado o LcoalStack, uma ferramente que simula os serviços 
 ## Terraform
 #### Neste repositório, se encontra alguns arquivos terraform responsáveis pela configuração do ambiente AWS e também pela configuração das filas SQS utilizadas para este exemplo.
 Inicialmente, no arquivo [main.tf](https://github.com/martineli17/.net-aws-sqs-consumer/blob/master/Sqs/main.tf), é definido as informações sobre o provider utilizado:
-```
+```hcl
 terraform {
   required_providers {
     aws = {
@@ -21,7 +21,7 @@ terraform {
 }
 ```
 Logo abaixo, há as configurações referente a este provider. Como foi utilizado o LocalStack, existe algumas definições mais específicas para o correto funcionamento, como a definição dos endpoints de acesso para cada serviço.
-```
+```hcl
 provider "aws" {
   region = "us-east-1"
   access_key = "default"
@@ -58,7 +58,7 @@ provider "aws" {
 }
 ```
 No outro arquivo terraform, o [resource.tf](https://github.com/martineli17/.net-aws-sqs-consumer/blob/master/Sqs/resource.tf), é encontrado a configuração relacionada a queue:
-```
+```hcl
 resource "aws_sqs_queue" "queue" {
   name                        = "queue"
   delay_seconds               = 1 // tempo que a mensagem irá aguardar para ser disponibilizada para o processamento (S)
