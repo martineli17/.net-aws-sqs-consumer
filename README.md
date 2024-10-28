@@ -178,8 +178,6 @@ Processamento da dead-letter
 
             return Task.Factory.StartNew(async () =>
             {
-                await _sqsClient.PurgeQueueAsync(queueUrl, stoppingToken);
-
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     var request = new ReceiveMessageRequest()
